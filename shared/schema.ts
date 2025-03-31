@@ -53,7 +53,10 @@ export const insertFaqSchema = createInsertSchema(faqs).pick({
   embedding: true,
 });
 
-export type InsertFaq = z.infer<typeof insertFaqSchema>;
+// Create a custom InsertFaq type that includes optional id for our in-memory storage needs
+export type InsertFaq = z.infer<typeof insertFaqSchema> & { 
+  id?: number 
+};
 export type Faq = typeof faqs.$inferSelect;
 
 // Product schema

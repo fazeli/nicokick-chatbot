@@ -187,10 +187,16 @@ async function updateFaqDataFile(faqs: any[]): Promise<void> {
   }
   
   try {
-    // Format FAQ data as TypeScript
+    // Format FAQ data as TypeScript, making sure to avoid smart quotes and other problematic characters
+    const sanitizedFaqs = faqs.map(faq => ({
+      ...faq,
+      // Replace any smart quotes with regular quotes
+      answer: faq.answer.replace(/[""]/g, '"').replace(/['']/g, "'")
+    }));
+    
     const faqsContent = `import { type InsertFaq } from "@shared/schema";
 
-export const faqData: InsertFaq[] = ${JSON.stringify(faqs, null, 2)
+export const faqData: InsertFaq[] = ${JSON.stringify(sanitizedFaqs, null, 2)
   .replace(/"([^"]+)":/g, '$1:') // Convert "key": to key:
   .replace(/"/g, "'") // Convert double quotes to single quotes
 };
@@ -199,10 +205,27 @@ export const faqData: InsertFaq[] = ${JSON.stringify(faqs, null, 2)
     // Write to file
     fs.writeFileSync(faqsFilePath, faqsContent);
     
-    // Reload the FAQs in storage
-    const { faqData } = await import("../data/faq");
-    await storage.initializeFaqs(faqData);
+    // Instead of trying to import the module again (which might use a cached version),
+    // we'll just update the storage directly with the sanitized faqs
+    try {
+      // Make a cleaned version of the FAQs to use with initializeFaqs
+      const simplifiedFaqs = sanitizedFaqs.map(faq => ({
+        topic: faq.topic,
+        question: faq.question,
+        answer: faq.answer,
+        keywords: faq.keywords,
+        embedding: faq.embedding
+      }));
+      
+      // Update storage directly with the sanitized data
+      await storage.initializeFaqs(simplifiedFaqs);
+      console.log("Successfully updated FAQs in storage");
+    } catch (reloadError) {
+      console.error("Error reloading FAQs in storage:", reloadError);
+      // We can continue because at least the file was updated
+    }
   } catch (error) {
+    console.error("Error updating FAQ data file:", error);
     // Restore from backup if something went wrong
     if (fs.existsSync(backupPath)) {
       fs.copyFileSync(backupPath, faqsFilePath);
