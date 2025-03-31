@@ -39,7 +39,7 @@ const ChatBot = () => {
   };
 
   // Fetch FAQ topics
-  const { data: faqTopics } = useQuery({
+  const { data: faqTopics = [] as string[] } = useQuery<string[]>({
     queryKey: ['/api/faq/topics'],
     staleTime: Infinity,
   });
@@ -171,6 +171,19 @@ const ChatBot = () => {
         ))}
         
         {isTyping && <TypingIndicator />}
+        
+        {/* Topic suggestion buttons */}
+        {messages.length === 2 && faqTopics && faqTopics.length > 0 && (
+          <div className="flex flex-wrap gap-2 my-4">
+            {faqTopics.map((topic, index) => (
+              <SuggestionButton 
+                key={index} 
+                text={topic} 
+                onClick={handleTopicClick} 
+              />
+            ))}
+          </div>
+        )}
         
         <div ref={messagesEndRef} />
       </div>

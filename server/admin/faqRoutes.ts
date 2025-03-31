@@ -173,10 +173,15 @@ async function getNextFaqId(): Promise<number> {
 
 // Helper function to update the faq.ts file
 async function updateFaqDataFile(faqs: any[]): Promise<void> {
-  const faqsFilePath = path.join(__dirname, "../data/faq.ts");
+  // ESM modules don't have __dirname, so we need to construct paths differently
+  // We'll use import.meta.url instead
+  const currentFilePath = new URL(import.meta.url).pathname;
+  const baseDir = path.dirname(path.dirname(currentFilePath)); // Go up two levels to get to server/
+  
+  const faqsFilePath = path.join(baseDir, "data/faq.ts");
   
   // Create a backup first
-  const backupPath = path.join(__dirname, "../data/faq.backup.ts");
+  const backupPath = path.join(baseDir, "data/faq.backup.ts");
   if (fs.existsSync(faqsFilePath)) {
     fs.copyFileSync(faqsFilePath, backupPath);
   }
