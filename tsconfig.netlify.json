@@ -1,11 +1,19 @@
 {
-  "extends": "./tsconfig.json",
   "compilerOptions": {
     "outDir": "netlify/functions/build",
-    "module": "commonjs",
-    "target": "es2020",
+    "module": "CommonJS",
+    "target": "ES2020",
     "isolatedModules": false,
-    "noEmit": false
+    "noEmit": false,
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "lib": ["esnext"],
+    "baseUrl": ".",
+    "paths": {
+      "@shared/*": ["./shared/*"]
+    }
   },
   "include": ["netlify/functions/**/*.ts", "server/**/*.ts", "shared/**/*.ts"],
   "exclude": ["node_modules", "client"]
