@@ -25,6 +25,9 @@ export interface IStorage {
   searchFaqsByEmbedding(queryEmbedding: number[], similarityThreshold?: number): Promise<Faq[]>;
   updateFaqEmbedding(faqId: number, embedding: number[]): Promise<void>;
   getFaqsWithEmbeddings(): Promise<Faq[]>;
+  createFaq(faq: InsertFaq): Promise<Faq>;
+  updateFaq(id: number, faq: Partial<InsertFaq>): Promise<Faq>;
+  deleteFaq(id: number): Promise<void>;
   
   // Product methods
   getProducts(): Promise<Product[]>;
@@ -168,6 +171,70 @@ export class MemStorage implements IStorage {
   
   async getFaqsWithEmbeddings(): Promise<Faq[]> {
     return this.faqs.filter(faq => faq.embedding != null);
+  }
+  
+  async createFaq(faq: InsertFaq): Promise<Faq> {
+    const id = faq.id || this.currentId.faqs++;
+    const newFaq: Faq = {
+      ...faq,
+      id,
+      embedding: faq.embedding || null
+    };
+    
+    this.faqs.push(newFaq);
+    
+    // Update FAQ data file for persistence
+    this.updateFaqData();
+    
+    return newFaq;
+  }
+  
+  async updateFaq(id: number, faqUpdate: Partial<InsertFaq>): Promise<Faq> {
+    const faqIndex = this.faqs.findIndex(faq => faq.id === id);
+    
+    if (faqIndex === -1) {
+      throw new Error(`FAQ with id ${id} not found`);
+    }
+    
+    const updatedFaq: Faq = {
+      ...this.faqs[faqIndex],
+      ...faqUpdate,
+      id // Ensure ID remains unchanged
+    };
+    
+    this.faqs[faqIndex] = updatedFaq;
+    
+    // Update FAQ data file for persistence
+    this.updateFaqData();
+    
+    return updatedFaq;
+  }
+  
+  async deleteFaq(id: number): Promise<void> {
+    const faqIndex = this.faqs.findIndex(faq => faq.id === id);
+    
+    if (faqIndex === -1) {
+      throw new Error(`FAQ with id ${id} not found`);
+    }
+    
+    // Remove the FAQ
+    this.faqs.splice(faqIndex, 1);
+    
+    // Update FAQ data file for persistence
+    this.updateFaqData();
+  }
+  
+  // Helper method to update FAQ data file
+  private updateFaqData(): void {
+    // This would normally write to a file, but we'll just log for now
+    // In a real implementation, this would update server/data/faq.ts
+    console.log("FAQ data updated in memory storage");
+    
+    // In production, implement file persistence:
+    // import fs from 'fs';
+    // const faqDataPath = path.join(__dirname, 'data/faq.ts');
+    // const faqContent = `export const faqData = ${JSON.stringify(this.faqs, null, 2)};`;
+    // fs.writeFileSync(faqDataPath, faqContent);
   }
   
   // Product methods
