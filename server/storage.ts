@@ -22,6 +22,9 @@ export interface IStorage {
   getFaqByTopic(topic: string): Promise<Faq[]>;
   getFaqTopics(): Promise<string[]>;
   searchFaqsByKeywords(keywords: string[]): Promise<Faq[]>;
+  searchFaqsByEmbedding(queryEmbedding: number[], similarityThreshold?: number): Promise<Faq[]>;
+  updateFaqEmbedding(faqId: number, embedding: number[]): Promise<void>;
+  getFaqsWithEmbeddings(): Promise<Faq[]>;
   
   // Product methods
   getProducts(): Promise<Product[]>;
@@ -106,8 +109,10 @@ export class MemStorage implements IStorage {
   }
   
   async getFaqTopics(): Promise<string[]> {
-    // Get unique topics
-    return [...new Set(this.faqs.map(faq => faq.topic))];
+    // Get unique topics using Array.from to avoid Set iteration issues
+    const topicsSet = new Set<string>();
+    this.faqs.forEach(faq => topicsSet.add(faq.topic));
+    return Array.from(topicsSet);
   }
   
   async searchFaqsByKeywords(keywords: string[]): Promise<Faq[]> {
@@ -123,6 +128,46 @@ export class MemStorage implements IStorage {
         faq.answer.toLowerCase().includes(keyword)
       );
     });
+  }
+  
+  async searchFaqsByEmbedding(queryEmbedding: number[], similarityThreshold: number = 0.7): Promise<Faq[]> {
+    // Get FAQs with embeddings
+    const faqsWithEmbeddings = this.faqs.filter(faq => faq.embedding != null);
+    
+    if (faqsWithEmbeddings.length === 0) {
+      return [];
+    }
+    
+    // Import the embedding service
+    const { embeddingService } = await import('./services/embeddingService');
+    
+    // Create array of embeddings from FAQs
+    const embeddings: number[][] = faqsWithEmbeddings.map(faq => faq.embedding as number[]);
+    
+    // Find similar FAQs
+    const similarFaqs = embeddingService.findSimilarDocuments(
+      queryEmbedding,
+      embeddings,
+      similarityThreshold
+    );
+    
+    // Map indices back to FAQ objects
+    return similarFaqs.map(({ index }) => faqsWithEmbeddings[index]);
+  }
+  
+  async updateFaqEmbedding(faqId: number, embedding: number[]): Promise<void> {
+    const faqIndex = this.faqs.findIndex(faq => faq.id === faqId);
+    
+    if (faqIndex !== -1) {
+      this.faqs[faqIndex] = {
+        ...this.faqs[faqIndex],
+        embedding
+      };
+    }
+  }
+  
+  async getFaqsWithEmbeddings(): Promise<Faq[]> {
+    return this.faqs.filter(faq => faq.embedding != null);
   }
   
   // Product methods
@@ -157,16 +202,19 @@ export class MemStorage implements IStorage {
   async initializeFaqs(faqs: InsertFaq[]): Promise<void> {
     this.faqs = faqs.map((faq, index) => ({
       ...faq,
-      id: index + 1
-    }));
+      id: index + 1,
+      embedding: faq.embedding || null // Ensure embedding is always defined
+    })) as Faq[];
     this.currentId.faqs = this.faqs.length + 1;
   }
   
   async initializeProducts(products: InsertProduct[]): Promise<void> {
     this.products = products.map((product, index) => ({
       ...product,
-      id: index + 1
-    }));
+      id: index + 1,
+      imageUrl: product.imageUrl || null, // Ensure imageUrl is always defined
+      details: product.details || {} // Ensure details is always defined
+    })) as Product[];
     this.currentId.products = this.products.length + 1;
   }
   
@@ -174,8 +222,13 @@ export class MemStorage implements IStorage {
     this.orders = orders.map((order, index) => ({
       ...order,
       id: index + 1,
-      createdAt: new Date()
-    }));
+      createdAt: new Date(),
+      shippingMethod: order.shippingMethod || null,
+      estimatedDelivery: order.estimatedDelivery || null,
+      trackingNumber: order.trackingNumber || null,
+      userId: order.userId || null,
+      items: order.items || {}
+    })) as Order[];
     this.currentId.orders = this.orders.length + 1;
   }
 }

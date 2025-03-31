@@ -2,11 +2,18 @@ import type { Express } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
 import { insertMessageSchema } from "@shared/schema";
-import { ChatbotService } from "./services/chatbot";
+import { EnhancedChatbotService } from "./services/enhancedChatbot";
+import { initializeEmbeddings } from "./services/embeddingInitService";
 
 export async function registerRoutes(app: Express): Promise<Server> {
-  // Initialize chatbot service
-  const chatbotService = new ChatbotService(storage);
+  // Initialize chatbot service with enhanced AI capabilities
+  const chatbotService = new EnhancedChatbotService(storage);
+  
+  // Initialize embeddings for FAQs in the background
+  // This won't block application startup
+  initializeEmbeddings().catch(error => {
+    console.error("Error initializing embeddings:", error);
+  });
 
   // API Routes - all prefixed with /api
   

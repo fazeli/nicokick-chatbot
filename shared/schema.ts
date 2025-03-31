@@ -42,6 +42,7 @@ export const faqs = pgTable("faqs", {
   question: text("question").notNull(),
   answer: text("answer").notNull(),
   keywords: text("keywords").array().notNull(),
+  embedding: jsonb("embedding"), // Question embedding vector
 });
 
 export const insertFaqSchema = createInsertSchema(faqs).pick({
@@ -49,6 +50,7 @@ export const insertFaqSchema = createInsertSchema(faqs).pick({
   question: true,
   answer: true,
   keywords: true,
+  embedding: true,
 });
 
 export type InsertFaq = z.infer<typeof insertFaqSchema>;
