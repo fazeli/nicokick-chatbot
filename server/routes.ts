@@ -4,6 +4,7 @@ import { storage } from "./storage";
 import { insertMessageSchema } from "@shared/schema";
 import { EnhancedChatbotService } from "./services/enhancedChatbot";
 import { initializeEmbeddings } from "./services/embeddingInitService";
+import faqAdminRoutes from "./admin/faqRoutes";
 
 export async function registerRoutes(app: Express): Promise<Server> {
   // Initialize chatbot service with enhanced AI capabilities
@@ -177,6 +178,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
       return res.status(500).json({ message: "Failed to search products" });
     }
   });
+  
+  // Register admin routes
+  app.use("/api/admin", faqAdminRoutes);
 
   const httpServer = createServer(app);
 
