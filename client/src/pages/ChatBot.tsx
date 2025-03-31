@@ -7,14 +7,20 @@ import ChatMessage from "@/components/chat/ChatMessage";
 import ChatInput from "@/components/chat/ChatInput";
 import TypingIndicator from "@/components/chat/TypingIndicator";
 import SuggestionButton from "@/components/chat/SuggestionButton";
+import SpeechSettings from "@/components/accessibility/SpeechSettings";
 import { formatTimestamp } from "@/lib/chatUtils";
+import { useSpeech } from "@/hooks/use-speech";
 
 const ChatBot = () => {
   const [messages, setMessages] = useState<Message[]>([]);
   const [isTyping, setIsTyping] = useState(false);
   const [sessionId, setSessionId] = useState("");
   const [inputValue, setInputValue] = useState("");
+  const [showSettings, setShowSettings] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  
+  // Initialize speech functionality
+  const { isSupported } = useSpeech();
 
   // Initial session setup and welcome message
   useEffect(() => {
@@ -197,27 +203,50 @@ const ChatBot = () => {
         />
         
         <div className="flex justify-between items-center mt-3 px-1">
-          <button className="text-xs text-[#3b82f6] hover:underline flex items-center" onClick={() => queryClient.refetchQueries({ queryKey: ['/api/faq/topics'] })}>
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1" viewBox="0 0 20 20" fill="currentColor">
-              <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-8-3a1 1 0 00-.867.5 1 1 0 11-1.731-1A3 3 0 0113 8a3.001 3.001 0 01-2 2.83V11a1 1 0 11-2 0v-1a1 1 0 011-1 1 1 0 100-2zm0 8a1 1 0 100-2 1 1 0 000 2z" clipRule="evenodd" />
-            </svg>
-            FAQ
-          </button>
+          <div className="flex space-x-2">
+            <button className="text-xs text-[#3b82f6] hover:underline flex items-center" onClick={() => queryClient.refetchQueries({ queryKey: ['/api/faq/topics'] })}>
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1" viewBox="0 0 20 20" fill="currentColor">
+                <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-8-3a1 1 0 00-.867.5 1 1 0 11-1.731-1A3 3 0 0113 8a3.001 3.001 0 01-2 2.83V11a1 1 0 11-2 0v-1a1 1 0 011-1 1 1 0 100-2zm0 8a1 1 0 100-2 1 1 0 000 2z" clipRule="evenodd" />
+              </svg>
+              FAQ
+            </button>
+            
+            {isSupported && (
+              <button 
+                className="text-xs text-[#3b82f6] hover:underline flex items-center" 
+                onClick={() => setShowSettings(true)}
+                aria-label="Accessibility settings"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1" viewBox="0 0 20 20" fill="currentColor">
+                  <path fillRule="evenodd" d="M5 2a1 1 0 011 1v1h1a1 1 0 010 2H6v1a1 1 0 01-2 0V6H3a1 1 0 010-2h1V3a1 1 0 011-1zm0 10a1 1 0 011 1v1h1a1 1 0 110 2H6v1a1 1 0 11-2 0v-1H3a1 1 0 110-2h1v-1a1 1 0 011-1zm7-10a1 1 0 01.707.293l.707.707L15 4.414a1 1 0 01-1.414 1.414L13 5.414l-.707-.707a1 1 0 010-1.414l.707-.707A1 1 0 0112 2zm-2 12a1 1 0 01.707.293l.707.707L15 15.414a1 1 0 01-1.414 1.414L13 16.414l-.707-.707a1 1 0 010-1.414l.707-.707A1 1 0 0110 14z" clipRule="evenodd" />
+                </svg>
+                Accessibility
+              </button>
+            )}
+          </div>
           
-          <button className="text-xs text-[#3b82f6] hover:underline flex items-center" onClick={handleHumanSupport}>
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1" viewBox="0 0 20 20" fill="currentColor">
-              <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z" />
-            </svg>
-            Human Support
-          </button>
-          
-          <button className="text-xs text-[#3b82f6] hover:underline flex items-center" onClick={handleClearChat}>
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1" viewBox="0 0 20 20" fill="currentColor">
-              <path fillRule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clipRule="evenodd" />
-            </svg>
-            Clear Chat
-          </button>
+          <div className="flex space-x-2">
+            <button className="text-xs text-[#3b82f6] hover:underline flex items-center" onClick={handleHumanSupport}>
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1" viewBox="0 0 20 20" fill="currentColor">
+                <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z" />
+              </svg>
+              Human Support
+            </button>
+            
+            <button className="text-xs text-[#3b82f6] hover:underline flex items-center" onClick={handleClearChat}>
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1" viewBox="0 0 20 20" fill="currentColor">
+                <path fillRule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clipRule="evenodd" />
+              </svg>
+              Clear Chat
+            </button>
+          </div>
         </div>
+        
+        {/* Accessibility Settings Modal */}
+        <SpeechSettings 
+          isOpen={showSettings} 
+          onClose={() => setShowSettings(false)} 
+        />
       </div>
     </div>
   );

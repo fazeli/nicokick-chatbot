@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useState, useEffect, useRef } from "react";
+import { useSpeech } from "@/hooks/use-speech";
 
 interface ChatMessageProps {
   content: string;
@@ -7,6 +8,75 @@ interface ChatMessageProps {
 }
 
 const ChatMessage: React.FC<ChatMessageProps> = ({ content, isUser, timestamp }) => {
+  // Get speech settings directly from localStorage
+  const rate = parseFloat(localStorage.getItem('speechRate') || '1');
+  const pitch = parseFloat(localStorage.getItem('speechPitch') || '1');
+  const volume = parseFloat(localStorage.getItem('speechVolume') || '1');
+  
+  // Initialize speech with user settings
+  const { speak, stop, isSpeaking, isSupported, voices } = useSpeech({
+    rate,
+    pitch,
+    volume
+  });
+  
+  // Use useEffect to handle stopping speech on unmount and to update when localStorage changes
+  useEffect(() => {
+    // Function to update settings based on localStorage
+    const handleStorageChange = () => {
+      // This will update the useSpeech hook indirectly by remounting component
+      if (isSpeaking) {
+        stop();
+      }
+    };
+    
+    // Listen for storage changes
+    window.addEventListener('storage', handleStorageChange);
+    
+    // Cleanup listener and stop speaking on unmount
+    return () => {
+      window.removeEventListener('storage', handleStorageChange);
+      if (isSpeaking) {
+        stop();
+      }
+    };
+  }, [isSpeaking, stop]);
+  
+  // Extract plain text content for speech
+  const getPlainTextForSpeech = () => {
+    try {
+      const contentObj = JSON.parse(content);
+      if (contentObj.type === 'product-info') {
+        return `${contentObj.text} ${contentObj.products.map((p: any) => 
+          `${p.name}. ${p.description}`).join('. ')} ${contentObj.conclusion}`;
+      } else if (contentObj.type === 'order-status') {
+        return `Order ${contentObj.orderNumber} Status. Status: ${contentObj.status}. 
+                ${contentObj.shippingMethod ? `Shipping Method: ${contentObj.shippingMethod}.` : ''} 
+                ${contentObj.estimatedDelivery ? `Estimated Delivery: ${contentObj.estimatedDelivery}.` : ''} 
+                ${contentObj.message}`;
+      } else if (contentObj.type === 'human-support') {
+        return `${contentObj.text} Our customer support is available Monday to Friday, 9am to 8pm Eastern Standard Time, 
+                and Saturday to Sunday, 10am to 6pm Eastern Standard Time. 
+                Estimated wait time: ${contentObj.waitTime}`;
+      } else if (contentObj.type === 'faq-topics') {
+        return `${contentObj.text} Available topics: ${contentObj.topics.join(', ')}`;
+      }
+    } catch (e) {
+      // Not JSON, return as is
+      return content;
+    }
+    return content;
+  };
+
+  // Function to handle text-to-speech
+  const handleSpeak = () => {
+    if (isSpeaking) {
+      stop();
+    } else {
+      speak(getPlainTextForSpeech());
+    }
+  };
+  
   // Function to render product cards if they exist in the content
   const renderContent = () => {
     // Check if content has JSON format with product data
@@ -138,9 +208,34 @@ const ChatMessage: React.FC<ChatMessageProps> = ({ content, isUser, timestamp })
             <path fillRule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clipRule="evenodd" />
           </svg>
         </div>
-        <div className="bg-white rounded-2xl rounded-bl-none p-3 max-w-[80%] shadow-sm">
+        <div className="bg-white rounded-2xl rounded-bl-none p-3 max-w-[80%] shadow-sm relative">
           {renderContent()}
-          <span className="text-xs text-gray-500 mt-1 block">{timestamp}</span>
+          <div className="flex items-center justify-between mt-1">
+            <span className="text-xs text-gray-500">{timestamp}</span>
+            
+            {isSupported && (
+              <button 
+                onClick={handleSpeak}
+                className={`text-xs ml-2 p-1 rounded-full transition-colors ${
+                  isSpeaking 
+                    ? "bg-red-100 text-red-600 hover:bg-red-200" 
+                    : "bg-blue-100 text-blue-600 hover:bg-blue-200"
+                }`}
+                aria-label={isSpeaking ? "Stop speaking" : "Listen to this message"}
+                title={isSpeaking ? "Stop speaking" : "Listen to this message"}
+              >
+                {isSpeaking ? (
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+                    <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8 7a1 1 0 00-1 1v4a1 1 0 001 1h4a1 1 0 001-1V8a1 1 0 00-1-1H8z" clipRule="evenodd" />
+                  </svg>
+                ) : (
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+                    <path fillRule="evenodd" d="M9.383 3.076A1 1 0 0110 4v12a1 1 0 01-1.707.707L4.586 13H2a1 1 0 01-1-1V8a1 1 0 011-1h2.586l3.707-3.707a1 1 0 011.09-.217zM14.657 2.929a1 1 0 011.414 0A9.972 9.972 0 0119 10a9.972 9.972 0 01-2.929 7.071 1 1 0 01-1.414-1.414A7.971 7.971 0 0017 10c0-2.21-.894-4.208-2.343-5.657a1 1 0 010-1.414zm-2.829 2.828a1 1 0 011.415 0A5.983 5.983 0 0115 10a5.984 5.984 0 01-1.757 4.243 1 1 0 01-1.415-1.415A3.984 3.984 0 0013 10a3.983 3.983 0 00-1.172-2.828 1 1 0 010-1.415z" clipRule="evenodd" />
+                  </svg>
+                )}
+              </button>
+            )}
+          </div>
         </div>
       </div>
     );
