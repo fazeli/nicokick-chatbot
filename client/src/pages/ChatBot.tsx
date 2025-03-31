@@ -27,12 +27,11 @@ const ChatBot = () => {
 
   const fetchInitialMessages = async (sid: string) => {
     try {
-      const response = await apiRequest(
-        "POST", 
-        "/api/chat/init", 
-        { sessionId: sid }
-      );
-      const initialMessages = await response.json();
+      const initialMessages = await apiRequest("/api/chat/init", {
+        method: "POST",
+        body: JSON.stringify({ sessionId: sid }),
+        headers: { "Content-Type": "application/json" }
+      });
       setMessages(initialMessages);
     } catch (error) {
       console.error("Failed to initialize chat:", error);
@@ -48,16 +47,15 @@ const ChatBot = () => {
   // Send message mutation
   const sendMessageMutation = useMutation({
     mutationFn: async (content: string) => {
-      const response = await apiRequest(
-        "POST",
-        "/api/chat/message",
-        { 
+      return await apiRequest("/api/chat/message", {
+        method: "POST",
+        body: JSON.stringify({
           sessionId,
           content,
-          isUser: true 
-        }
-      );
-      return await response.json();
+          isUser: true
+        }),
+        headers: { "Content-Type": "application/json" }
+      });
     },
     onSuccess: (userMessage) => {
       setMessages(prev => [...prev, userMessage]);
@@ -74,15 +72,14 @@ const ChatBot = () => {
       // Simulate typing delay for better UX
       await new Promise(resolve => setTimeout(resolve, 1000 + Math.random() * 1000));
       
-      const response = await apiRequest(
-        "POST",
-        "/api/chat/response",
-        { 
+      return await apiRequest("/api/chat/response", {
+        method: "POST",
+        body: JSON.stringify({
           sessionId,
-          userMessage 
-        }
-      );
-      return await response.json();
+          userMessage
+        }),
+        headers: { "Content-Type": "application/json" }
+      });
     },
     onSuccess: (botResponse) => {
       setIsTyping(false);
@@ -119,11 +116,11 @@ const ChatBot = () => {
   // Handle clear chat
   const handleClearChat = async () => {
     try {
-      await apiRequest(
-        "POST",
-        "/api/chat/clear",
-        { sessionId }
-      );
+      await apiRequest("/api/chat/clear", {
+        method: "POST",
+        body: JSON.stringify({ sessionId }),
+        headers: { "Content-Type": "application/json" }
+      });
       
       // Start a new session
       const newSessionId = Date.now().toString();
