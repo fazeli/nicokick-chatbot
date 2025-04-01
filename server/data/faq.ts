@@ -3,7 +3,7 @@ import { type InsertFaq } from "@shared/schema";
 export const faqData: InsertFaq[] = [
   {
     topic: 'Shipping Policy',
-    question: 'What are your shipping options?gg',
+    question: 'What are your shipping options?',
     answer: 'Nicokick offers several shipping options: Standard shipping (3-5 business days), Expedited shipping (2-3 business days), and Priority shipping (1-2 business days). Standard shipping is free for orders over $50.',
     keywords: [
       'shipping',
