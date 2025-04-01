@@ -1,0 +1,134 @@
+2:44:28 PM: Waiting for other deploys from your team to complete. Check the queue: https://app.netlify.com/teams/fazeli/builds
+2:45:37 PM: build-image version: 59029cc38debec12b365d8cde2431251b878d6bf (noble)
+2:45:37 PM: buildbot version: 911e38b4db82bf5cd08627b366a88d99622b3aab
+2:45:37 PM: Building without cache
+2:45:37 PM: Starting to prepare the repo for build
+2:45:37 PM: No cached dependencies found. Cloning fresh repo
+2:45:37 PM: git clone --filter=blob:none https://github.com/fazeli/nicokick-chatbot
+2:45:37 PM: Preparing Git Reference refs/heads/main
+2:45:39 PM: Custom publish path detected. Proceeding with the specified path: 'server/dist'
+2:45:39 PM: Custom functions path detected. Proceeding with the specified path: 'server/netlify/functions'
+2:45:39 PM: Custom build command detected. Proceeding with the specified command: 'npm run build'
+2:45:39 PM: Starting to install dependencies
+2:45:39 PM: Python version set to 3.13.2
+2:45:40 PM: Ruby version set to 2.7.2
+2:45:40 PM: mise go@1.19         install
+2:45:40 PM: mise go@1.19         download go1.19.linux-amd64.tar.gz
+2:45:41 PM: mise go@1.19         checksum go1.19.linux-amd64.tar.gz
+2:45:41 PM: mise go@1.19         extract go1.19.linux-amd64.tar.gz
+2:45:43 PM: mise go@1.19         go version
+2:45:43 PM: mise go@1.19         go version go1.19 linux/amd64
+2:45:43 PM: mise go@1.19       ✓ installed
+2:45:43 PM: Go version set to 1.19
+2:45:44 PM: Using PHP version 8.3
+2:45:45 PM: Downloading and installing node v18.20.8...
+2:45:45 PM: Downloading https://nodejs.org/dist/v18.20.8/node-v18.20.8-linux-x64.tar.xz...
+2:45:46 PM: Computing checksum with sha256sum
+2:45:46 PM: Checksums matched!
+2:45:48 PM: Now using node v18.20.8 (npm v10.8.2)
+2:45:48 PM: Enabling Node.js Corepack
+2:45:48 PM: Started restoring cached build plugins
+2:45:48 PM: Finished restoring cached build plugins
+2:45:48 PM: Started restoring cached corepack dependencies
+2:45:48 PM: Finished restoring cached corepack dependencies
+2:45:48 PM: No npm workspaces detected
+2:45:48 PM: Started restoring cached node modules
+2:45:48 PM: Finished restoring cached node modules
+2:45:48 PM: Installing npm packages using npm version 10.8.2
+2:46:01 PM: npm warn deprecated inflight@1.0.6: This module is not supported, and leaks memory. Do not use it. Check out lru-cache if you want a good and tested way to coalesce async requests by a key value, which is much more comprehensive and powerful.
+2:46:01 PM: npm warn deprecated glob@8.1.0: Glob versions prior to v9 are no longer supported
+2:46:01 PM: npm warn deprecated @esbuild-kit/esm-loader@2.6.5: Merged into tsx: https://tsx.is
+2:46:01 PM: npm warn deprecated @esbuild-kit/core-utils@3.3.2: Merged into tsx: https://tsx.is
+2:46:27 PM: added 258 packages, and audited 259 packages in 39s
+2:46:27 PM: 32 packages are looking for funding
+2:46:27 PM:   run `npm fund` for details
+2:46:27 PM: 4 moderate severity vulnerabilities
+2:46:27 PM: To address all issues (including breaking changes), run:
+2:46:27 PM:   npm audit fix --force
+2:46:27 PM: Run `npm audit` for details.
+2:46:27 PM: npm packages installed
+2:46:27 PM: Successfully installed dependencies
+2:46:27 PM: Starting build script
+2:46:28 PM: Detected 2 framework(s)
+2:46:28 PM: "hydrogen" at version "unknown"
+2:46:28 PM: "remix" at version "unknown"
+2:46:28 PM: Section completed: initializing
+2:46:30 PM: ​
+2:46:30 PM: Netlify Build                                                 
+2:46:30 PM: ────────────────────────────────────────────────────────────────
+2:46:30 PM: ​
+2:46:30 PM: ❯ Version
+2:46:30 PM:   @netlify/build 30.0.6
+2:46:30 PM: ​
+2:46:30 PM: ❯ Flags
+2:46:30 PM:   accountId: 67405d1cd1097e5be470d1ad
+2:46:30 PM:   baseRelDir: true
+2:46:30 PM:   buildId: 67ebdface7251e146768081e
+2:46:30 PM:   deployId: 67ebdface7251e1467680820
+2:46:30 PM: ​
+2:46:30 PM: ❯ Current directory
+2:46:30 PM:   /opt/build/repo/server
+2:46:30 PM: ​
+2:46:30 PM: ❯ Config file
+2:46:30 PM:   /opt/build/repo/server/netlify.toml
+2:46:30 PM: ​
+2:46:30 PM: ❯ Context
+2:46:30 PM:   production
+2:46:30 PM: ​
+2:46:30 PM: build.command from netlify.toml                               
+2:46:30 PM: ────────────────────────────────────────────────────────────────
+2:46:30 PM: ​
+2:46:30 PM: $ npm run build
+2:46:30 PM: > nicokick-chatbot-server@1.0.0 build
+2:46:30 PM: > npm run build:deps && npm run build:netlify
+2:46:30 PM: > nicokick-chatbot-server@1.0.0 build:deps
+2:46:30 PM: > npm install drizzle-orm @types/pg pg drizzle-zod zod --no-save
+2:46:32 PM: added 9 packages, changed 1 package, and audited 268 packages in 2s
+2:46:32 PM: 32 packages are looking for funding
+2:46:32 PM:   run `npm fund` for details
+2:46:32 PM: 4 moderate severity vulnerabilities
+2:46:32 PM: To address all issues (including breaking changes), run:
+2:46:32 PM:   npm audit fix --force
+2:46:32 PM: Run `npm audit` for details.
+2:46:32 PM: > nicokick-chatbot-server@1.0.0 build:netlify
+2:46:33 PM: > mkdir -p dist/netlify/functions && cp -r netlify dist/ && tsc netlify/functions/api.ts netlify/types.ts services/*.ts admin/*.ts data/*.ts storage.ts routes.ts --outDir dist --esModuleInterop --skipLibCheck --moduleResolution node --target ES2020 --module ESNext
+
+admin/faqRoutes.ts(3,33): error TS2307: Cannot find module '@shared/schema' or its corresponding type declarations.
+2:46:33 PM: data/faq.ts(1,32): error TS2307: Cannot find module '@shared/schema' or its corresponding type declarations.
+2:46:33 PM: data/orders.ts(1,34): error TS2307: Cannot find module '@shared/schema' or its corresponding type declarations.
+2:46:33 PM: data/products.ts(1,36): error TS2307: Cannot find module '@shared/schema' or its corresponding type declarations.
+2:46:33 PM: routes.ts(4,37): error TS2307: Cannot find module '@shared/schema' or its corresponding type declarations.
+2:46:33 PM: services/chatbot.ts(2,50): error TS2307: Cannot find module '@shared/schema' or its corresponding type declarations.
+2:46:33 PM: services/enhancedChatbot.ts(2,50): error TS2307: Cannot find module '@shared/schema' or its corresponding type declarations.
+2:46:33 PM: storage.ts(9,8): error TS2307: Cannot find module '@shared/schema' or its corresponding type declarations.
+2:46:33 PM: ​
+2:46:33 PM: "build.command" failed                                        
+2:46:33 PM: ────────────────────────────────────────────────────────────────
+2:46:33 PM: ​
+2:46:33 PM:   Error message
+2:46:33 PM:   Command failed with exit code 2: npm run build (https://ntl.fyi/exit-code-2)
+2:46:33 PM: ​
+2:46:33 PM:   Error location
+2:46:33 PM:   In build.command from netlify.toml:
+2:46:33 PM:   npm run build
+2:46:33 PM: ​
+2:46:33 PM:   Resolved config
+2:46:33 PM:   build:
+2:46:33 PM:     base: /opt/build/repo/server
+2:46:33 PM:     command: npm run build
+2:46:33 PM:     commandOrigin: config
+2:46:33 PM:     environment:
+2:46:33 PM:       - NODE_VERSION
+2:46:33 PM:       - NETLIFY
+2:46:33 PM:     publish: /opt/build/repo/server/dist
+2:46:33 PM:     publishOrigin: config
+2:46:33 PM:   functionsDirectory: /opt/build/repo/server/netlify/functions
+2:46:33 PM:   redirects:
+2:46:34 PM:     - from: /*
+      status: 200
+      to: /.netlify/functions/api/:splat
+  redirectsOrigin: config
+2:46:34 PM: Build failed due to a user error: Build script returned non-zero exit code: 2
+2:46:34 PM: Failing build: Failed to build site
+2:46:34 PM: Failed during stage 'building site': Build script returned non-zero exit code: 2 (https://ntl.fyi/exit-code-2)
+2:46:34 PM: Finished processing build request in 57.36s
