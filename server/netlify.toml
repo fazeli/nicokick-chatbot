@@ -1,14 +1,12 @@
 [build]
-  # The build command for the backend
   command = "npm run build"
-  
-  # The directory to publish
   publish = "dist"
-  
-  # The functions directory
   functions = "netlify/functions"
 
-# Set environment variables
+[[redirects]]
+  from = "/*"
+  to = "/.netlify/functions/api/:splat"
+  status = 200
+
 [build.environment]
-  # Add any environment variables needed for the build here
   NODE_VERSION = "18"
