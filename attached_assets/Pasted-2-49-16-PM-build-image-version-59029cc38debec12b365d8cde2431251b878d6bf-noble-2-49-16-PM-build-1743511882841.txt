@@ -1,0 +1,136 @@
+2:49:16 PM: build-image version: 59029cc38debec12b365d8cde2431251b878d6bf (noble)
+2:49:16 PM: buildbot version: 911e38b4db82bf5cd08627b366a88d99622b3aab
+2:49:17 PM: Fetching cached dependencies
+2:49:17 PM: Failed to fetch cache, continuing with build
+2:49:17 PM: Starting to prepare the repo for build
+2:49:17 PM: No cached dependencies found. Cloning fresh repo
+2:49:17 PM: git clone --filter=blob:none https://github.com/fazeli/nicokick-chatbot
+2:49:17 PM: Preparing Git Reference refs/heads/main
+2:49:18 PM: Custom publish path detected. Proceeding with the specified path: 'server/dist'
+2:49:18 PM: Custom functions path detected. Proceeding with the specified path: 'server/netlify/functions'
+2:49:18 PM: Custom build command detected. Proceeding with the specified command: 'npm run build'
+2:49:19 PM: Starting to install dependencies
+2:49:19 PM: Python version set to 3.13.2
+2:49:20 PM: Ruby version set to 2.7.2
+2:49:20 PM: mise go@1.19         install
+2:49:20 PM: mise go@1.19         download go1.19.linux-amd64.tar.gz
+2:49:22 PM: mise go@1.19         checksum go1.19.linux-amd64.tar.gz
+2:49:22 PM: mise go@1.19         extract go1.19.linux-amd64.tar.gz
+2:49:25 PM: mise go@1.19         go version
+2:49:25 PM: mise go@1.19         go version go1.19 linux/amd64
+2:49:25 PM: mise go@1.19       ✓ installed
+2:49:26 PM: Go version set to 1.19
+2:49:26 PM: Using PHP version 8.3
+2:49:28 PM: Downloading and installing node v18.20.8...
+2:49:28 PM: Downloading https://nodejs.org/dist/v18.20.8/node-v18.20.8-linux-x64.tar.xz...
+2:49:28 PM: Computing checksum with sha256sum
+2:49:28 PM: Checksums matched!
+2:49:30 PM: Now using node v18.20.8 (npm v10.8.2)
+2:49:31 PM: Enabling Node.js Corepack
+2:49:31 PM: Started restoring cached build plugins
+2:49:31 PM: Finished restoring cached build plugins
+2:49:31 PM: Started restoring cached corepack dependencies
+2:49:31 PM: Finished restoring cached corepack dependencies
+2:49:31 PM: No npm workspaces detected
+2:49:31 PM: Started restoring cached node modules
+2:49:31 PM: Finished restoring cached node modules
+2:49:31 PM: Installing npm packages using npm version 10.8.2
+2:49:48 PM: npm warn deprecated inflight@1.0.6: This module is not supported, and leaks memory. Do not use it. Check out lru-cache if you want a good and tested way to coalesce async requests by a key value, which is much more comprehensive and powerful.
+2:49:48 PM: npm warn deprecated glob@8.1.0: Glob versions prior to v9 are no longer supported
+2:49:49 PM: npm warn deprecated @esbuild-kit/core-utils@3.3.2: Merged into tsx: https://tsx.is
+2:49:49 PM: npm warn deprecated @esbuild-kit/esm-loader@2.6.5: Merged into tsx: https://tsx.is
+2:50:16 PM: added 258 packages, and audited 259 packages in 45s
+2:50:16 PM: 32 packages are looking for funding
+2:50:16 PM:   run `npm fund` for details
+2:50:16 PM: 4 moderate severity vulnerabilities
+2:50:16 PM: To address all issues (including breaking changes), run:
+2:50:16 PM:   npm audit fix --force
+2:50:16 PM: Run `npm audit` for details.
+2:50:16 PM: npm packages installed
+2:50:17 PM: Successfully installed dependencies
+2:50:17 PM: Starting build script
+2:50:18 PM: Detected 2 framework(s)
+2:50:18 PM: "hydrogen" at version "unknown"
+2:50:18 PM: "remix" at version "unknown"
+2:50:18 PM: Section completed: initializing
+2:50:19 PM: ​
+2:50:19 PM: Netlify Build                                                 
+2:50:19 PM: ────────────────────────────────────────────────────────────────
+2:50:19 PM: ​
+2:50:19 PM: ❯ Version
+2:50:19 PM:   @netlify/build 30.0.6
+2:50:19 PM: ​
+2:50:19 PM: ❯ Flags
+2:50:19 PM:   accountId: 67405d1cd1097e5be470d1ad
+2:50:19 PM:   baseRelDir: true
+2:50:19 PM:   buildId: 67ebe0bae18a010008e35844
+2:50:19 PM:   deployId: 67ebe0bae18a010008e35846
+2:50:20 PM: ​
+2:50:20 PM: ❯ Current directory
+2:50:20 PM:   /opt/build/repo/server
+2:50:20 PM: ​
+2:50:20 PM: ❯ Config file
+2:50:20 PM:   /opt/build/repo/server/netlify.toml
+2:50:20 PM: ​
+2:50:20 PM: ❯ Context
+2:50:20 PM:   production
+2:50:20 PM: ​
+2:50:20 PM: build.command from netlify.toml                               
+2:50:20 PM: ────────────────────────────────────────────────────────────────
+2:50:20 PM: ​
+2:50:20 PM: $ npm run build
+2:50:20 PM: > nicokick-chatbot-server@1.0.0 build
+2:50:20 PM: > npm run build:deps && npm run netlify:build
+2:50:20 PM: > nicokick-chatbot-server@1.0.0 build:deps
+2:50:20 PM: > npm install drizzle-orm @types/pg pg drizzle-zod zod nanoid --no-save
+2:50:22 PM: added 9 packages, changed 1 package, and audited 268 packages in 2s
+2:50:22 PM: 32 packages are looking for funding
+2:50:22 PM:   run `npm fund` for details
+2:50:22 PM: 4 moderate severity vulnerabilities
+2:50:22 PM: To address all issues (including breaking changes), run:
+2:50:22 PM:   npm audit fix --force
+2:50:22 PM: Run `npm audit` for details.
+2:50:22 PM: > nicokick-chatbot-server@1.0.0 netlify:build
+2:50:22 PM: > mkdir -p dist && node netlify-build.js
+2:50:22 PM: file:///opt/build/repo/server/netlify-build.js:3
+2:50:22 PM: const fs = require('fs');
+2:50:22 PM:            ^
+2:50:22 PM: ReferenceError: require is not defined in ES module scope, you can use import instead
+2:50:22 PM: This file is being treated as an ES module because it has a '.js' file extension and '/opt/build/repo/server/package.json' contains "type": "module". To treat it as a CommonJS script, rename it to use the '.cjs' file extension.
+2:50:22 PM:     at file:///opt/build/repo/server/netlify-build.js:3:12
+2:50:22 PM:     at ModuleJob.run (node:internal/modules/esm/module_job:195:25)
+2:50:22 PM:     at async ModuleLoader.import (node:internal/modules/esm/loader:337:24)
+2:50:22 PM:     at async loadESM (node:internal/process/esm_loader:34:7)
+2:50:22 PM:     at async handleMainPromise (node:internal/modules/run_main:106:12)
+2:50:22 PM: Node.js v18.20.8
+2:50:22 PM: ​
+2:50:22 PM: "build.command" failed                                        
+2:50:22 PM: ────────────────────────────────────────────────────────────────
+2:50:22 PM: ​
+2:50:22 PM:   Error message
+2:50:22 PM:   Command failed with exit code 1: npm run build (https://ntl.fyi/exit-code-1)
+2:50:22 PM: ​
+2:50:22 PM:   Error location
+2:50:22 PM:   In build.command from netlify.toml:
+2:50:22 PM:   npm run build
+2:50:22 PM: ​
+2:50:22 PM:   Resolved config
+2:50:22 PM:   build:
+2:50:22 PM:     base: /opt/build/repo/server
+2:50:22 PM:     command: npm run build
+2:50:22 PM:     commandOrigin: config
+2:50:22 PM:     environment:
+2:50:22 PM:       - NODE_VERSION
+2:50:22 PM:       - NETLIFY
+2:50:22 PM:     publish: /opt/build/repo/server/dist
+2:50:22 PM:     publishOrigin: config
+2:50:22 PM:   functionsDirectory: /opt/build/repo/server/netlify/functions
+2:50:22 PM:   redirects:
+2:50:22 PM:     - from: /*
+      status: 200
+      to: /.netlify/functions/api/:splat
+  redirectsOrigin: config
+2:50:22 PM: Build failed due to a user error: Build script returned non-zero exit code: 2
+2:50:22 PM: Failing build: Failed to build site
+2:50:23 PM: Finished processing build request in 1m6.31s
+2:50:23 PM: Failed during stage 'building site': Build script returned non-zero exit code: 2 (https://ntl.fyi/exit-code-2)
