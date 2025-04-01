@@ -5,11 +5,12 @@
   "type": "module",
   "scripts": {
     "dev": "tsx index.ts",
-    "build": "npm run build:deps && npm run netlify:build",
-    "build:deps": "npm install drizzle-orm @types/pg pg drizzle-zod zod nanoid --no-save",
+    "build": "npm run build:deps && npm run netlify:simplified",
+    "build:deps": "npm install express cors serverless-http --no-save",
     "build:tsc": "tsc -p tsconfig.json", 
     "build:copy-shared": "mkdir -p dist/shared && cp -r ../shared/* dist/shared/",
     "netlify:build": "mkdir -p dist && node netlify-build.js",
+    "netlify:simplified": "node netlify-simplified.js",
     "start": "node dist/index.js"
   },
   "dependencies": {
