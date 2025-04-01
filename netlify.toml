@@ -1,0 +1,20 @@
+[build]
+  # Set the base directory to the client folder
+  base = "client"
+  
+  # The build command to run
+  command = "npm run build"
+  
+  # The directory containing the built frontend assets
+  publish = "dist"
+
+# Handle client-side routing with React Router/Wouter
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+# Set environment variables
+[build.environment]
+  # Add any environment variables needed for the build here
+  NODE_VERSION = "18"
