@@ -1,0 +1,30 @@
+$ npm run build
+2:25:22 PM: > nicokick-chatbot-server@1.0.0 build
+2:25:22 PM: > npm run build:tsc && npm run build:copy-shared
+2:25:22 PM: > nicokick-chatbot-server@1.0.0 build:tsc
+2:25:22 PM: > tsc -p tsconfig.json
+2:25:23 PM: Failed during stage 'building site': Build script returned non-zero exit code: 2 (https://ntl.fyi/exit-code-2)
+2:25:23 PM: services/chatbot.ts(148,9): error TS7034: Variable 'products' implicitly has type 'any[]' in some locations where its type cannot be determined.
+2:25:23 PM: services/chatbot.ts(154,24): error TS7005: Variable 'products' implicitly has an 'any[]' type.
+2:25:23 PM: services/chatbot.ts(158,37): error TS7005: Variable 'products' implicitly has an 'any[]' type.
+2:25:23 PM: services/embeddingService.ts(7,11): error TS6133: 'embeddingModel' is declared but its value is never read.
+2:25:23 PM: storage.ts(2,3): error TS6133: 'users' is declared but its value is never read.
+2:25:23 PM: storage.ts(3,3): error TS6133: 'messages' is declared but its value is never read.
+2:25:23 PM: storage.ts(4,3): error TS6133: 'faqs' is declared but its value is never read.
+2:25:23 PM: storage.ts(5,3): error TS6133: 'products' is declared but its value is never read.
+2:25:23 PM: storage.ts(6,3): error TS6133: 'orders' is declared but its value is never read.
+2:25:23 PM: storage.ts(124,44): error TS7006: Parameter 'k' implicitly has an 'any' type.
+2:25:23 PM: vite.ts(5,10): error TS2305: Module '"vite"' has no exported member 'createServer'.
+2:25:23 PM: vite.ts(5,44): error TS2303: Circular definition of import alias 'createLogger'.
+2:25:23 PM: vite.ts(5,44): error TS2459: Module '"vite"' declares 'createLogger' locally, but it is not exported.
+2:25:23 PM: vite.ts(10,24): error TS2307: Cannot find module 'nanoid' or its corresponding type declarations.
+2:25:23 PM: vite.ts(37,15): error TS7006: Parameter 'msg' implicitly has an 'any' type.
+2:25:23 PM: vite.ts(37,20): error TS7006: Parameter 'options' implicitly has an 'any' type.
+2:25:23 PM: ../shared/schema.ts(1,75): error TS2307: Cannot find module 'drizzle-orm/pg-core' or its corresponding type declarations.
+2:25:23 PM: ../shared/schema.ts(2,36): error TS2307: Cannot find module 'drizzle-zod' or its corresponding type declarations.
+2:25:23 PM: ../shared/schema.ts(3,19): error TS2307: Cannot find module 'zod' or its corresponding type declarations.
+2:25:23 PM: ../vite.config.ts(1,10): error TS2305: Module '"vite"' has no exported member 'defineConfig'.
+2:25:23 PM: ../vite.config.ts(2,19): error TS2307: Cannot find module '@vitejs/plugin-react' or its corresponding type declarations.
+2:25:23 PM: ../vite.config.ts(3,25): error TS2307: Cannot find module '@replit/vite-plugin-shadcn-theme-json' or its corresponding type declarations.
+2:25:23 PM: ../vite.config.ts(5,33): error TS2307: Cannot find module '@replit/vite-plugin-runtime-error-modal' or its corresponding type declarations.
+2:25:23 PM: ../vite.config.ts(19,24): error TS2307: Cannot find module '@replit/vite-plugin-cartographer' or its corresponding type declarations.
