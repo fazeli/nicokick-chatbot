@@ -1,3 +1,5 @@
+// Simple import from shared schema
+// Netlify functions will use the schema we manually copied to netlify/schema.ts
 import { 
   users, type User, type InsertUser,
   messages, type Message, type InsertMessage,

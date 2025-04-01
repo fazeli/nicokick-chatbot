@@ -5,10 +5,11 @@
   "type": "module",
   "scripts": {
     "dev": "tsx index.ts",
-    "build": "npm run build:deps && npm run build:tsc && npm run build:copy-shared",
-    "build:deps": "npm install drizzle-orm drizzle-zod zod @types/nanoid --no-save",
+    "build": "npm run build:deps && npm run build:netlify",
+    "build:deps": "npm install drizzle-orm @types/pg pg drizzle-zod zod --no-save",
     "build:tsc": "tsc -p tsconfig.json",
     "build:copy-shared": "mkdir -p dist/shared && cp -r ../shared/* dist/shared/",
+    "build:netlify": "mkdir -p dist/netlify/functions && cp -r netlify dist/ && tsc netlify/functions/api.ts netlify/types.ts services/*.ts admin/*.ts data/*.ts storage.ts routes.ts --outDir dist --esModuleInterop --skipLibCheck --moduleResolution node --target ES2020 --module ESNext",
     "start": "node dist/index.js"
   },
   "dependencies": {

@@ -1,0 +1,79 @@
+2:37:21 PM: Failed during stage 'building site': Build script returned non-zero exit code: 2 (https://ntl.fyi/exit-code-2)
+2:37:18 PM: Netlify Build                                                 
+2:37:18 PM: ────────────────────────────────────────────────────────────────
+2:37:18 PM: ​
+2:37:18 PM: ❯ Version
+2:37:18 PM:   @netlify/build 30.0.6
+2:37:18 PM: ​
+2:37:18 PM: ❯ Flags
+2:37:18 PM:   accountId: 67405d1cd1097e5be470d1ad
+2:37:18 PM:   baseRelDir: true
+2:37:18 PM:   buildId: 67ebdd59e7251e11136806bf
+2:37:18 PM:   deployId: 67ebdd59e7251e11136806c1
+2:37:18 PM: ​
+2:37:18 PM: ❯ Current directory
+2:37:18 PM:   /opt/build/repo/server
+2:37:18 PM: ​
+2:37:18 PM: ❯ Config file
+2:37:18 PM:   /opt/build/repo/server/netlify.toml
+2:37:18 PM: ​
+2:37:18 PM: ❯ Context
+2:37:18 PM:   production
+2:37:18 PM: ​
+2:37:18 PM: build.command from netlify.toml                               
+2:37:18 PM: ────────────────────────────────────────────────────────────────
+2:37:18 PM: ​
+2:37:18 PM: $ npm run build
+2:37:18 PM: > nicokick-chatbot-server@1.0.0 build
+2:37:18 PM: > npm run build:deps && npm run build:tsc && npm run build:copy-shared
+2:37:18 PM: > nicokick-chatbot-server@1.0.0 build:deps
+2:37:18 PM: > npm install drizzle-orm drizzle-zod zod @types/nanoid --no-save
+2:37:19 PM: added 1 package, and audited 260 packages in 1s
+2:37:19 PM: 32 packages are looking for funding
+2:37:19 PM:   run `npm fund` for details
+2:37:19 PM: 4 moderate severity vulnerabilities
+2:37:19 PM: To address all issues (including breaking changes), run:
+2:37:19 PM:   npm audit fix --force
+2:37:19 PM: Run `npm audit` for details.
+2:37:20 PM: > nicokick-chatbot-server@1.0.0 build:tsc
+2:37:20 PM: > tsc -p tsconfig.json
+2:37:21 PM: vite.ts(5,10): error TS2305: Module '"vite"' has no exported member 'createServer'.
+2:37:21 PM: vite.ts(5,44): error TS2303: Circular definition of import alias 'createLogger'.
+2:37:21 PM: vite.ts(5,44): error TS2459: Module '"vite"' declares 'createLogger' locally, but it is not exported.
+2:37:21 PM: ../shared/schema.ts(1,75): error TS2307: Cannot find module 'drizzle-orm/pg-core' or its corresponding type declarations.
+2:37:21 PM: ../shared/schema.ts(2,36): error TS2307: Cannot find module 'drizzle-zod' or its corresponding type declarations.
+2:37:21 PM: ../shared/schema.ts(3,19): error TS2307: Cannot find module 'zod' or its corresponding type declarations.
+2:37:21 PM: ../vite.config.ts(1,10): error TS2305: Module '"vite"' has no exported member 'defineConfig'.
+2:37:21 PM: ../vite.config.ts(2,19): error TS2307: Cannot find module '@vitejs/plugin-react' or its corresponding type declarations.
+2:37:21 PM: ../vite.config.ts(3,25): error TS2307: Cannot find module '@replit/vite-plugin-shadcn-theme-json' or its corresponding type declarations.
+2:37:21 PM: ../vite.config.ts(5,33): error TS2307: Cannot find module '@replit/vite-plugin-runtime-error-modal' or its corresponding type declarations.
+2:37:21 PM: ../vite.config.ts(19,24): error TS2307: Cannot find module '@replit/vite-plugin-cartographer' or its corresponding type declarations.
+2:37:21 PM: ​
+2:37:21 PM: "build.command" failed                                        
+2:37:21 PM: ────────────────────────────────────────────────────────────────
+2:37:21 PM: ​
+2:37:21 PM:   Error message
+2:37:21 PM:   Command failed with exit code 2: npm run build (https://ntl.fyi/exit-code-2)
+2:37:21 PM: ​
+2:37:21 PM:   Error location
+2:37:21 PM:   In build.command from netlify.toml:
+2:37:21 PM:   npm run build
+2:37:21 PM: ​
+2:37:21 PM:   Resolved config
+2:37:21 PM:   build:
+2:37:21 PM:     base: /opt/build/repo/server
+2:37:21 PM:     command: npm run build
+2:37:21 PM:     commandOrigin: config
+2:37:21 PM:     environment:
+2:37:21 PM:       - NODE_VERSION
+2:37:21 PM:     publish: /opt/build/repo/server/dist
+2:37:21 PM:     publishOrigin: config
+2:37:21 PM:   functionsDirectory: /opt/build/repo/server/netlify/functions
+2:37:21 PM:   redirects:
+2:37:21 PM:     - from: /*
+      status: 200
+      to: /.netlify/functions/api/:splat
+  redirectsOrigin: config
+2:37:21 PM: Build failed due to a user error: Build script returned non-zero exit code: 2
+2:37:21 PM: Failing build: Failed to build site
+2:37:21 PM: Finished processing build request in 51.937s
